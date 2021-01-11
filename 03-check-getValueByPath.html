@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//这个函数是在Vue编译模板的时候就生成的
+			function createValueByPath(path) {
+				let paths = path.split('.')
+				return function getValueByPath (obj) {
+					let res = obj
+					let prop
+					while (prop = paths.shift()) {
+						res = res[prop]
+					}
+					return res
+				}
+			}
+			let getValueByPath = createValueByPath('a.b.c')
+			
+			let o = {
+				a: {
+					b: {
+						c: '正确了'
+					}
+				}
+			}
+			var res = getValueByPath(o)
+			console.log(res)
+		</script>
+	</body>
+</html>
